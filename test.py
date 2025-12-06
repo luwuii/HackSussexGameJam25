@@ -21,26 +21,32 @@ def randomInt(x, y):
 
 
 class person:
-  def __init__ (self, name, rect, speed):
+  def __init__ (self, name, rect, speed, draw):
     self.name = name
     self.rect = rect
     self.speed = speed
+    self.draw = draw
 
 enemy = []
 
 for i in range ((screenHeight) // 100):
-    enemy.append(person(("enemy" + str(i)), (pygame.Rect(1, i*100, randomInt(50,100), randomInt(50,100))), randomInt(1,5)))
-
+    enemy.append(person(("enemy" + str(i)), (pygame.Rect(1, i*100, randomInt(50,100), randomInt(50,100))), randomInt(1,5), False))
 
 running = True
 
 while running:
     clock.tick(60)
     for i in range (len(enemy)):
-        pygame.draw.rect(screen, RED, enemy[i].rect)
+        rng = randomInt(1,500)
+        if rng == 10:
+            enemy[i].draw = True
+
+    
     for i in range (len(enemy)):
-        enemy[i].rect.x += 1
-        print(enemy[1].rect.x)
+        if enemy[i].draw == True:
+            pygame.draw.rect(screen, RED, enemy[i].rect)
+            enemy[i].rect.x += 1
+
 
     pygame.display.flip()
 
