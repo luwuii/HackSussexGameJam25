@@ -9,7 +9,6 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 WHITE = (255,255,255)
 GREY = (100,100,100)
-
 screenWidth = 1280
 screenHeight = 720
 
@@ -87,8 +86,11 @@ for i in range ((screenHeight) // 100):
     enemy[i].rect.x = (-100)
     enemy[i].rect.y = i * 100
 
+#global variable defs
 running = True
 coins = 0
+gamestate = 0
+
 while running:
     clock.tick(60)
     screen.fill(BLACK)
@@ -102,7 +104,7 @@ while running:
         if rng == 5:
             enemy[i].draw = True
 
-        if enemy[i].draw == True:
+        if enemy[i].draw == True and gamestate == 0:
             screen.blit(enemy[i].image, enemy[i].rect)
             enemy[i].rect.x += 1
         if enemy[i].rect.x > 100 + screenWidth:
@@ -118,7 +120,7 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             for e in enemy:
-                if e.rect.collidepoint(pos):
+                if e.rect.collidepoint(pos) and gamestate == 0:
                     e.health = e.health - 1
                     coins += 1
                     if e.health == 0:
@@ -130,7 +132,10 @@ while running:
                 
                 if shop_rect.collidepoint(event.pos):
                     shop_open = not shop_open
-            
+                    if gamestate == 0:
+                        gamestate = 1
+                    elif gamestate == 1:
+                        gamestate = 0
 #---------------------------------------------------
 
     pygame.display.flip()
