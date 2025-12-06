@@ -30,13 +30,14 @@ def randomInt(x, y):
    return random.randint(x, y)
 
 class Sprite(pygame.sprite.Sprite):
-    def __init__(self, colour, height, width, draw):
+    def __init__(self, colour, height, width, draw, health):
         super().__init__()
 
         self.image = pygame.Surface([width, height])
         self.image.fill(BLACK)
         self.image.set_colorkey(BLACK)
         self.draw = draw
+        self.health = health
         pygame.draw.rect(self.image,colour,pygame.Rect(0, 0, width, height))
 
         self.rect = self.image.get_rect()
@@ -47,7 +48,7 @@ all_sprites_list = pygame.sprite.Group()
 
 for i in range ((screenHeight) // 100):
 
-    enemy.append(Sprite(RED, 50, 50, False))
+    enemy.append(Sprite(RED, 50, 50, False, randomInt(1,5)))
     enemy[i].rect.x = (1)
     enemy[i].rect.y = i * 100
     all_sprites_list.add(enemy[i])
@@ -81,6 +82,9 @@ while running:
             pos = pygame.mouse.get_pos()
             for e in enemy:
                 if e.rect.collidepoint(pos):
-                    print("Sprite clicked!")
-                    e.rect.x = -100
+                    e.health = e.health - 1
+                    print(e.health)
                     coins += 1
+                    if e.health == 0:
+                        e.rect.x = -100
+                        e.health = randomInt(1,5)
