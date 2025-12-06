@@ -1,5 +1,6 @@
 import pygame 
 import random
+pygame.init()
 
 BLACK = (0, 0 ,0)
 RED = (255, 0, 0)
@@ -20,38 +21,55 @@ def randomInt(x, y):
    return random.randint(x, y)
 
 
-class person:
-  def __init__ (self, name, rect, speed, draw):
-    self.name = name
-    self.rect = rect
-    self.speed = speed
-    self.draw = draw
+class Sprite(pygame.sprite.Sprite):
+    def __init__(self, colour, height, width, draw):
+        super().__init__()
+
+        self.image = pygame.Surface([width, height])
+        self.image.fill(BLACK)
+        self.image.set_colorkey(BLACK)
+        self.draw = draw
+        pygame.draw.rect(self.image,colour,pygame.Rect(0, 0, width, height))
+
+        self.rect = self.image.get_rect()
 
 enemy = []
 
+all_sprites_list = pygame.sprite.Group()
+
 for i in range ((screenHeight) // 100):
-    enemy.append(person(("enemy" + str(i)), (pygame.Rect(1, i*100, randomInt(50,100), randomInt(50,100))), randomInt(1,5), False))
+
+    enemy.append(Sprite(RED, 50, 50, False))
+    enemy[i].rect.x = (1)
+    enemy[i].rect.y = i * 100
+    all_sprites_list.add(enemy[i])
 
 running = True
 
 while running:
     clock.tick(60)
-    for i in range (len(enemy)):
-        rng = randomInt(1,500)
-        if rng == 10:
+    screen.fill(BLACK)              
+ 
+    screen.blit(enemy[1].image, enemy[1].rect)
+    for i in range ((screenHeight) // 100):
+        rng = randomInt(1,50)
+        if rng == 5:
             enemy[i].draw = True
 
-    
-    for i in range (len(enemy)):
         if enemy[i].draw == True:
-            pygame.draw.rect(screen, RED, enemy[i].rect)
+            screen.blit(enemy[i].image, enemy[i].rect)
             enemy[i].rect.x += 1
-
+        if enemy[i].rect.x > 100 + screenWidth:
+            enemy[i].rect.x = - 100
 
     pygame.display.flip()
 
-    screen.fill(BLACK)
-    for event in pygame.event.get():    
-        # Check for QUIT event      
+    for event in pygame.event.get():        
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            for e in enemy:
+                if e.rect.collidepoint(pos):
+                    print("Sprite clicked!")
+                    e.rect.x = -100
