@@ -12,6 +12,46 @@ player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
 testimage = pygame.image.load('testimage.png').convert_alpha()
 
+#display the shop menu
+def display_shop():
+    draw_text('position' + str(player_pos),font ,BLACK,10,10)
+    if shop_open:
+        #shop window
+        pygame.draw.rect(screen, GREY, (200, 100, 880, 520))
+        #shop border
+        pygame.draw.rect(screen, BLACK, (200, 100, 880, 520), 4)
+        
+        shop_text = draw_text("Ye olde shoppe" ,magicfont, BLACK, 220,120)
+        shop_text = draw_text("Buy potions and spells to defend yourself against the evil malwares" ,magicfont, BLACK, 220,180)
+
+
+
+#define colours
+WHITE = (255,255,255)
+GREY = (100,100,100)
+BLACK = (0,0,0)
+
+
+#define font
+font = pygame.font.SysFont('Futura',30)
+magicfont = pygame.font.Font('Heraldic Shadows.otf',30)
+
+# draws text to the screen
+def draw_text(text,font,text_col,x,y):
+    img = font.render(text, True, text_col)
+    screen.blit (img,(x,y))
+
+
+shop_open = True
+
+#draw shop
+#def draw_shopButton():
+     
+
+
+
+
+
 
 while running:
     # poll for events
@@ -40,6 +80,8 @@ while running:
     if keys[pygame.K_RIGHT]:
         testimage = pygame.transform.flip(testimage,1,0)
         pygame.time.wait(100)
+
+    display_shop()
 
     # flip() the display to put your work on screen
     pygame.display.flip()
