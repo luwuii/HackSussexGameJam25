@@ -83,7 +83,7 @@ enemy = []
 
 for i in range ((screenHeight) // 100):
     enemySize = random.randint(30,70)
-    enemy.append(Sprite(RED, enemySize, enemySize, False, (enemySize // 10 - 2)))
+    enemy.append(EnemySprites(RED, enemySize, enemySize, False, (enemySize // 10 - 2)))
     enemy[i].rect.x = (-100)
     enemy[i].rect.y = i * 100
 
