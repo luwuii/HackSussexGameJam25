@@ -65,7 +65,7 @@ clock = pygame.time.Clock()
 def randomInt(x, y):
    return random.randint(x, y)
 
-class Sprite(pygame.sprite.Sprite):
+class EnemySprites(pygame.sprite.Sprite):
     def __init__(self, colour, height, width, draw, health):
         super().__init__()
 
@@ -110,7 +110,6 @@ while running:
 
     display_shop()
     shop_rect = draw_shopButton()
-    
     
 
     for event in pygame.event.get():        
