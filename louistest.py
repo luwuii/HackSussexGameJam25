@@ -21,8 +21,8 @@ def display_shop():
         #shop border
         pygame.draw.rect(screen, BLACK, (200, 100, 880, 520), 4)
         
-        shop_text = draw_text("Ye olde shoppe" ,magicfont, BLACK, 220,120)
-        shop_text = draw_text("Buy potions and spells to defend yourself against the evil malwares" ,magicfont, BLACK, 220,180)
+        draw_text("Ye olde shoppe" ,magicfont, BLACK, 220,120)
+        draw_text("Buy potions and spells to defend yourself against the evil malwares" ,magicfont, BLACK, 220,180)
 
 
 
@@ -42,10 +42,25 @@ def draw_text(text,font,text_col,x,y):
     screen.blit (img,(x,y))
 
 
-shop_open = True
 
-#draw shop
-#def draw_shopButton():
+shop_open = False
+
+#draw shop button
+def draw_shopButton():
+    # button size
+    w, h = 120, 40
+
+    # top-right corner (10px margin)
+    x = screen.get_width() - w - 10
+    y = 10
+
+    # draw button
+    pygame.draw.rect(screen, WHITE, (x, y, w, h))
+    
+    draw_text("SHOP" ,magicfont, BLACK,(x + w // 2)-35,(y + h // 2-15))
+
+    
+    return pygame.Rect(x, y, w, h)   # return button rect for clicking
      
 
 
@@ -81,7 +96,14 @@ while running:
         testimage = pygame.transform.flip(testimage,1,0)
         pygame.time.wait(100)
 
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if shop_rect.collidepoint(event.pos):
+            shop_open = not shop_open
+        pygame.time.wait(100)
+
     display_shop()
+    shop_rect = draw_shopButton()
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()
