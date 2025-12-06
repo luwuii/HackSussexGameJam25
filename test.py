@@ -122,7 +122,7 @@ while running:
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if shop_rect.collidepoint(event.pos):
                 shop_open = not shop_open
-            pygame.time.wait(100)
+            
 #---------------------------------------------------
 
 
