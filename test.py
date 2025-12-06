@@ -6,20 +6,28 @@ BLACK = (0, 0 ,0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+
 screenWidth = 1000
 screenHeight = 800
 
 #screen
+def draw_text(text,font,text_col,x,y):
+    img = font.render(text, True, text_col)
+    screen.blit (img,(x,y))
 
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 pygame.display.set_caption('GAME Jam')
 screen.fill(BLACK)
 
+
+pygame.font.init()
+font = pygame.font.SysFont('arial',30)
+
 clock = pygame.time.Clock()
 
 def randomInt(x, y):
    return random.randint(x, y)
-
 
 class Sprite(pygame.sprite.Sprite):
     def __init__(self, colour, height, width, draw):
@@ -45,10 +53,12 @@ for i in range ((screenHeight) // 100):
     all_sprites_list.add(enemy[i])
 
 running = True
-
+coins = 0
 while running:
     clock.tick(60)
-    screen.fill(BLACK)              
+    screen.fill(BLACK)          
+
+    draw_text(("coins " + str(coins)), font ,YELLOW ,250 , 10)   
  
     screen.blit(enemy[1].image, enemy[1].rect)
     for i in range ((screenHeight) // 100):
@@ -73,3 +83,4 @@ while running:
                 if e.rect.collidepoint(pos):
                     print("Sprite clicked!")
                     e.rect.x = -100
+                    coins += 1
