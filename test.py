@@ -44,14 +44,12 @@ class Sprite(pygame.sprite.Sprite):
 
 enemy = []
 
-all_sprites_list = pygame.sprite.Group()
 
 for i in range ((screenHeight) // 100):
-
-    enemy.append(Sprite(RED, 50, 50, False, randomInt(1,5)))
-    enemy[i].rect.x = (1)
+    enemySize = random.randint(30,70)
+    enemy.append(Sprite(RED, enemySize, enemySize, False, (enemySize // 10 - 2)))
+    enemy[i].rect.x = (-100)
     enemy[i].rect.y = i * 100
-    all_sprites_list.add(enemy[i])
 
 running = True
 coins = 0
@@ -59,9 +57,8 @@ while running:
     clock.tick(60)
     screen.fill(BLACK)          
 
-    draw_text(("coins " + str(coins)), font ,YELLOW ,250 , 10)   
- 
-    screen.blit(enemy[1].image, enemy[1].rect)
+    draw_text(("coins " + str(coins)), font ,YELLOW ,900, 10)   
+
     for i in range ((screenHeight) // 100):
         rng = randomInt(1,50)
         if rng == 5:
@@ -83,7 +80,6 @@ while running:
             for e in enemy:
                 if e.rect.collidepoint(pos):
                     e.health = e.health - 1
-                    print(e.health)
                     coins += 1
                     if e.health == 0:
                         e.rect.x = -100
