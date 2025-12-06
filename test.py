@@ -116,17 +116,7 @@ while running:
     for event in pygame.event.get():        
         if event.type == pygame.QUIT:
             running = False
-
-
-#-----------------------SHOP------------------------
-    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if shop_rect.collidepoint(event.pos):
-                shop_open = not shop_open
-            
-#---------------------------------------------------
-
-
-    if event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             for e in enemy:
                 if e.rect.collidepoint(pos):
@@ -135,6 +125,17 @@ while running:
                     if e.health == 0:
                         e.rect.x = -100
                         e.health = randomInt(1,5)
+                        
+#-----------------------SHOP------------------------
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                
+                if shop_rect.collidepoint(event.pos):
+                    shop_open = not shop_open
+            
+#---------------------------------------------------
+
+
+    
 
 
 
